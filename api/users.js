@@ -105,6 +105,8 @@ const login = async (req, res) => {
     }
 }
 
+
+
 const profile = async (req, res) => {
     console.log('Inside of PROFILE route');
     res.json({
@@ -112,6 +114,28 @@ const profile = async (req, res) => {
         name: req.user.name,
         email: req.user.email,
     });
+}
+
+
+
+const update = async (req, res) => {
+    console.log('Able to update?')
+    const name = req.params.name;
+    console.log(req.body);
+    console.log(req.user);
+    try {
+        // const updatedName = await User.findByIdAndUpdate(req.user.id, req.body)  
+        const user = await User.findById(req.user.id)
+        user.name = req.body.name
+        await user.save()
+        const updatedUser = await User.findById(req.user.id)
+        console.log('updated user',updatedUser);
+        // res.redirect('/api/users/profile');
+        res.json({message:'user updated', data: updatedUser})      
+    } catch (error) {
+        console.log('------error updating profile name-------')
+        console.log(error)
+    }
 }
 
 // routes
@@ -123,6 +147,9 @@ router.post('/signup', signup);
 
 // POST api/users/login (Public)
 router.post('/login', login);
+
+
+router.put('/profile', passport.authenticate('jwt', { session: false }), update);
 
 // GET api/users/current (Private)
 router.get('/profile', passport.authenticate('jwt', { session: false }), profile);

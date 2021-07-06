@@ -1,6 +1,9 @@
 require('dotenv').config();
 const mongoose = require('mongoose');
 
+
+
+
 mongoose.connect(process.env.MONGO_URI, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
@@ -24,9 +27,10 @@ db.on('error', (error) => {
 //Import all of your models
 const User = require('./User');
 const Book = require('./Book');
-
+const eloRequest = require('./EloRequest');
 //export all of the models from this file
 module.exports = {
     User,
     Book,
+    eloRequest,
 }
