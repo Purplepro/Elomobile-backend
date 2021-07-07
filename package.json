@@ -4,8 +4,7 @@
   "description": "Backend API for MERN authentication",
   "main": "app.js",
   "scripts": {
-    "start": "node app.js",
-    "seed": "node seed.js"
+    "start": "node app.js"
   },
   "repository": {
     "type": "git",
